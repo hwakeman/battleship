@@ -1,12 +1,15 @@
-import React from 'react'
-import '../styles/footer.css'
 import FooterLinks from './FooterLinks';
 
 export default function Footer() {
-    return (
-      <div className='footer'>
-        <div className='footer-text'>Created by Harley Wakeman</div>
-        <FooterLinks/>
-      </div>
-    );
+  const footer = document.createElement('div')
+  footer.classList.add('footer')
+
+  const footerText = document.createElement('div')
+  footerText.classList.add('footer-text')
+  footerText.innerHTML = 'Created by Harley Wakeman'
+
+  footer.appendChild(footerText)
+  footer.appendChild(FooterLinks())
+
+  return footer
 }

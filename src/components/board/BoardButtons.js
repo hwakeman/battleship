@@ -1,10 +1,11 @@
-import React from 'react'
-import '../styles/board.css'
-
 export default function BoardButtons() {
-    return (
-      <div className='board-buttons'>
-          <button className='board-button'>Rotate</button>
-      </div>
-    );
+  const boardButtons = document.createElement('div')
+  boardButtons.classList.add('board-buttons')
+
+  const rotateButton = document.createElement('button')
+  rotateButton.classList.add('board-button')
+  rotateButton.innerHTML = 'Rotate'
+
+  boardButtons.appendChild(rotateButton)
+  return boardButtons
 }

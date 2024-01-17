@@ -1,10 +1,7 @@
-import React from 'react'
-import './styles/header.css'
-
 export default function Header() {
-    return (
-      <div className='header'>
-        Battleship
-      </div>
-    );
+  const header = document.createElement('div')
+  header.classList.add('header')
+  header.innerHTML = 'Battleship'
+
+  return header
 }

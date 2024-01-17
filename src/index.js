@@ -1,7 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import './app.css'
 
-const root = ReactDOM.createRoot(document.getElementById("content"));
+import Body from "./components/Body";
+import Header from "./components/Header";
+import Footer from "./components/footer/Footer";
 
-root.render(<App/>);
+document.getElementById('content').appendChild(Header())
+document.getElementById('content').appendChild(Body())
+document.getElementById('content').appendChild(Footer())
+
