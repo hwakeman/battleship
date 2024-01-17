@@ -1,10 +1,14 @@
 .header {
-    background-color: rgb(213, 84, 36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(205, 119, 40);
     color: white;
     width: 100%;
-
+    min-height: 50px;
     align-self: flex-end;
-    text-align: center;
 
-    order: 1;
+    text-align: center;
+    font-size: 1.5rem;
 }
