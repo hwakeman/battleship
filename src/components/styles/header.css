@@ -1,0 +1,10 @@
+.header {
+    background-color: rgb(213, 84, 36);
+    color: white;
+    width: 100%;
+
+    align-self: flex-end;
+    text-align: center;
+
+    order: 1;
+}
