@@ -2,11 +2,16 @@ import Board from './board/Board';
 import BoardButtons from './board/BoardButtons';
 
 export default function Body() {
-  const body = document.createElement('div')
-  body.classList.add('body')
+  const body = document.createElement('div');
+  body.classList.add('body');
 
-  body.appendChild(Board())
-  body.appendChild(BoardButtons())
+  const boards = document.createElement('div');
+  boards.classList.add('boards');
+  boards.appendChild(Board());
+  boards.appendChild(Board());
 
-  return body
+  body.appendChild(boards);
+  body.appendChild(BoardButtons());
+
+  return body;
 }
