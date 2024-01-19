@@ -21,25 +21,26 @@ export default class Gameboard {
     }
 
     this.shipList.push(ship);
+    const realYValue = this.board.length - y - 1;
     if (isHorizontal) {
       if (x + ship.length > this.board[0].length) {
         throw new Error('Ship Off Board Error');
       }
 
-      const realYValue = this.board.length - y - 1;
       for (let index = x; index < x + ship.length; index += 1) {
         if (this.board[realYValue][index] !== '') {
           throw new Error('Ship Overlap Error');
         }
+      }
 
+      for (let index = x; index < x + ship.length; index += 1) {
         this.board[realYValue][index] = ship.name;
       }
     } else {
-      if (y - ship.length > 0) {
+      if (y + ship.length > 10) {
         throw new Error('Ship Off Board Error');
       }
 
-      const realYValue = this.board.length - y - 1;
       for (
         let index = realYValue;
         index > realYValue - ship.length;
@@ -48,7 +49,13 @@ export default class Gameboard {
         if (this.board[index][x] !== '') {
           throw new Error('Ship Overlap Error');
         }
+      }
 
+      for (
+        let index = realYValue;
+        index > realYValue - ship.length;
+        index -= 1
+      ) {
         this.board[index][x] = ship.name;
       }
     }
