@@ -1,4 +1,4 @@
-import Gameboard from "./Gameboard.js";
+import Gameboard from './Gameboard.js';
 
 export default class Player {
   constructor(name) {
@@ -8,7 +8,7 @@ export default class Player {
   }
 
   setEnemyPlayer(player) {
-    if (!(player instanceof Player)) throw new Error("Type Error");
+    if (!(player instanceof Player)) throw new Error('Type Error');
     this.enemyPlayer = player;
   }
 
@@ -17,14 +17,14 @@ export default class Player {
     const randomXValue = this.getRandomInt(0, enemyBoard.board[0].length);
     const randomYValue = this.getRandomInt(0, enemyBoard.board.length);
     const realYValue = enemyBoard.board.length - randomYValue - 1;
-    if (enemyBoard.board[realYValue][randomXValue] !== "X") {
+    if (enemyBoard.board[realYValue][randomXValue] !== 'X') {
       enemyBoard.receiveAttack(randomXValue, randomYValue);
     } else {
       this.playRandomMove();
     }
   }
 
-  getRandomInt(min, max) {
+  static getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 }

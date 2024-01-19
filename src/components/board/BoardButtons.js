@@ -4,6 +4,7 @@ export default function BoardButtons() {
 
   const rotateButton = document.createElement('button');
   rotateButton.classList.add('board-button');
+  rotateButton.classList.add('rotate-button');
   rotateButton.innerHTML = 'Rotate';
 
   boardButtons.appendChild(rotateButton);
