@@ -14,8 +14,8 @@ export default class Player {
 
   playRandomMove() {
     const enemyBoard = this.enemyPlayer.playerBoard;
-    const randomXValue = this.getRandomInt(0, enemyBoard.board[0].length);
-    const randomYValue = this.getRandomInt(0, enemyBoard.board.length);
+    const randomXValue = Player.getRandomInt(0, enemyBoard.board[0].length);
+    const randomYValue = Player.getRandomInt(0, enemyBoard.board.length);
     const realYValue = enemyBoard.board.length - randomYValue - 1;
     if (enemyBoard.board[realYValue][randomXValue] !== 'X') {
       enemyBoard.receiveAttack(randomXValue, randomYValue);

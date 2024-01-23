@@ -4,6 +4,7 @@ import Body from './components/Body';
 import Header from './components/Header';
 import Footer from './components/footer/Footer';
 import nameForm from './components/nameForm';
+import Gameboard from './models/Gameboard';
 import Player from './models/Player';
 import Ship from './models/Ship';
 
@@ -18,8 +19,6 @@ const shipsArr = [
   new Ship('destroyer', 2),
 ];
 let shipsArrIndex = 0;
-
-console.log(playerArr);
 
 document.getElementById('content').appendChild(Header());
 document.getElementById('content').appendChild(Body(playerArr, computerArr));
@@ -43,6 +42,7 @@ let horizontalShips = true;
 updateEventListeners();
 
 function updateEventListeners() {
+  const tempGameboard = new Gameboard(10, 10);
   const playerBoardBoxesTemp = document.querySelectorAll('.player-board tr td');
   const playerBoardBoxes = [];
   for (let i = 0; i < 10; i += 1) {
@@ -59,9 +59,16 @@ function updateEventListeners() {
     playerBoardBoxes[x][y].addEventListener('click', () =>
       playerBoxClickHandler(x, y),
     );
+    playerBoardBoxes[x][y].addEventListener('mouseenter', () =>
+      playerBoxHoverHandler(x, y),
+    );
+    playerBoardBoxes[x][y].addEventListener('mouseout', () =>
+      playerBoxUnhoverHandler(),
+    );
   }
 
   const playerBoxClickHandler = (x, y) => {
+    console.log(x, y);
     player.playerBoard.place(
       shipsArr[shipsArrIndex],
       y,
@@ -74,6 +81,31 @@ function updateEventListeners() {
       .getElementsByClassName('body')[0]
       .appendChild(Body(player.playerBoard.board, computer.playerBoard.board));
     updateEventListeners();
+    console.log(player.playerBoard.board);
+  };
+
+  const playerBoxHoverHandler = (x, y) => {
+    if (horizontalShips) {
+      for (let i = y; i < y + shipsArr[shipsArrIndex].length; i += 1) {
+        playerBoardBoxes[x][i].classList.add('green');
+      }
+    } else {
+      for (
+        let index = x;
+        index > x - shipsArr[shipsArrIndex].length;
+        index -= 1
+      ) {
+        playerBoardBoxes[index][y].classList.add('green');
+      }
+    }
+  };
+
+  const playerBoxUnhoverHandler = () => {
+    for (let i = 0; i < 10; i += 1) {
+      for (let j = 0; j < 10; j += 1) {
+        playerBoardBoxes[i][j].classList.remove('green');
+      }
+    }
   };
 
   const rotateButton = document.getElementsByClassName('rotate-button')[0];
