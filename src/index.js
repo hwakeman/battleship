@@ -8,8 +8,7 @@ import Gameboard from './models/Gameboard';
 import Player from './models/Player';
 import Ship from './models/Ship';
 
-const playerArr = new Array(10).fill('').map(() => new Array(10).fill(''));
-const computerArr = new Array(10).fill('').map(() => new Array(10).fill(''));
+const emptyBoardArr = new Array(10).fill('').map(() => new Array(10).fill(''));
 
 const shipsArr = [
   new Ship('carrier', 5),
@@ -21,7 +20,9 @@ const shipsArr = [
 let shipsArrIndex = 0;
 
 document.getElementById('content').appendChild(Header());
-document.getElementById('content').appendChild(Body(playerArr, computerArr));
+document
+  .getElementById('content')
+  .appendChild(Body(emptyBoardArr, emptyBoardArr));
 document.getElementById('content').appendChild(Footer());
 document.getElementById('content').appendChild(nameForm());
 
@@ -30,6 +31,7 @@ const nameInput = document.getElementsByClassName('name-input')[0];
 let playerName;
 let player;
 let computer;
+
 submitButton.addEventListener('click', () => {
   playerName = nameInput.value;
   player = new Player(playerName);
@@ -42,7 +44,6 @@ let horizontalShips = true;
 updateEventListeners();
 
 function updateEventListeners() {
-  const tempGameboard = new Gameboard(10, 10);
   const playerBoardBoxesTemp = document.querySelectorAll('.player-board tr td');
   const playerBoardBoxes = [];
   for (let i = 0; i < 10; i += 1) {
@@ -111,5 +112,20 @@ function updateEventListeners() {
   const rotateButton = document.getElementsByClassName('rotate-button')[0];
   rotateButton.addEventListener('click', () => {
     horizontalShips = !horizontalShips;
+  });
+
+  const resetButton = document.getElementsByClassName('reset-button')[0];
+  resetButton.addEventListener('click', () => {
+    document.getElementById('content').innerHTML = '';
+    document.getElementById('content').appendChild(Header());
+    document
+      .getElementById('content')
+      .appendChild(Body(emptyBoardArr, emptyBoardArr));
+    document.getElementById('content').appendChild(Footer());
+    updateEventListeners();
+    shipsArrIndex = 0;
+    horizontalShips = true;
+    player.playerBoard = new Gameboard(10, 10);
+    computer.playerBoard = new Gameboard(10, 10);
   });
 }

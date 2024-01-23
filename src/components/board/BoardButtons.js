@@ -7,6 +7,12 @@ export default function BoardButtons() {
   rotateButton.classList.add('rotate-button');
   rotateButton.innerHTML = 'Rotate';
 
+  const resetButton = document.createElement('button');
+  resetButton.classList.add('board-button');
+  resetButton.classList.add('reset-button');
+  resetButton.innerHTML = 'Reset game';
+
   boardButtons.appendChild(rotateButton);
+  boardButtons.appendChild(resetButton);
   return boardButtons;
 }
