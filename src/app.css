@@ -9,6 +9,7 @@ body {
     align-items: center;
     justify-content: space-between;
 
+    min-width: 950px;
     height: 100%;
 }
 
@@ -63,7 +64,8 @@ body {
 .body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
 
     position: relative;
     width: 100%;
@@ -71,6 +73,26 @@ body {
     flex: 1;
 
     background-color: gray;
+}
+
+.board-labels {
+    display: flex;
+    justify-content: center;
+}
+
+.boards {
+    width: 70%;
+
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+}
+
+.win-message {
+    text-align: center;
 }
 
 .footer {
@@ -106,13 +128,6 @@ img {
     justify-content: center;
 
     max-height: 40px;
-}
-
-.boards {
-    display: flex;
-    justify-content: space-evenly;
-
-    width: 100%;
 }
 
 .player-board,

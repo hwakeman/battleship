@@ -18,6 +18,7 @@ const shipsArr = [
   new Ship('destroyer', 2),
 ];
 let shipsArrIndex = 0;
+let shipsPlaced = false;
 
 document.getElementById('content').appendChild(Header());
 document
@@ -77,6 +78,7 @@ function updateEventListeners() {
       horizontalShips,
     );
     shipsArrIndex += 1;
+    if (shipsArrIndex === 5) shipsPlaced = true;
     document.getElementsByClassName('body')[0].innerHTML = '';
     document
       .getElementsByClassName('body')[0]
