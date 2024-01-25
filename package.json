@@ -3,16 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "http://hwakeman.github.io/battleship",
-  "repository": {
-    "url": "git+https://github.com/hwakeman/battleship.git"
-  },
   "scripts": {
     "test": "jest",
     "watch": "webpack --watch",
-    "build": "webpack",
-    "predeploy": "npm run build",
-    "deploy": "main"
+    "build": "webpack"
   },
   "eslintConfig": {
     "extends": [
