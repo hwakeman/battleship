@@ -153,6 +153,10 @@ img {
     background-color: green;
 }
 
+.red {
+    background-color: red;
+}
+
 .board-buttons {
     display: flex;
     justify-content: center;

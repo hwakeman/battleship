@@ -18,7 +18,6 @@ const shipsArr = [
   new Ship('destroyer', 2),
 ];
 let shipsArrIndex = 0;
-let shipsPlaced = false;
 
 document.getElementById('content').appendChild(Header());
 document
@@ -38,6 +37,7 @@ submitButton.addEventListener('click', () => {
   player = new Player(playerName);
   computer = new Player('computer');
   player.setEnemyPlayer(computer);
+  computer.setEnemyPlayer(player);
 });
 
 let horizontalShips = true;
@@ -70,21 +70,19 @@ function updateEventListeners() {
   }
 
   const playerBoxClickHandler = (x, y) => {
-    console.log(x, y);
     player.playerBoard.place(
       shipsArr[shipsArrIndex],
       y,
       Math.abs(x - 9),
       horizontalShips,
     );
+    computer.placeShipRandomly(shipsArr[shipsArrIndex]);
     shipsArrIndex += 1;
-    if (shipsArrIndex === 5) shipsPlaced = true;
     document.getElementsByClassName('body')[0].innerHTML = '';
     document
       .getElementsByClassName('body')[0]
       .appendChild(Body(player.playerBoard.board, computer.playerBoard.board));
     updateEventListeners();
-    console.log(player.playerBoard.board);
   };
 
   const playerBoxHoverHandler = (x, y) => {
@@ -130,4 +128,86 @@ function updateEventListeners() {
     player.playerBoard = new Gameboard(10, 10);
     computer.playerBoard = new Gameboard(10, 10);
   });
+
+  if (shipsArrIndex === 5) updateComputerBoardEventListeners();
+}
+
+function updateComputerBoardEventListeners() {
+  const computerBoardBoxesTemp = document.querySelectorAll(
+    '.computer-board tr td',
+  );
+  const computerBoardBoxes = [];
+  for (let i = 0; i < 10; i += 1) {
+    computerBoardBoxes[i] = [];
+
+    for (let j = 0; j < 10; j += 1) {
+      computerBoardBoxes[i][j] = computerBoardBoxesTemp[i * 10 + j];
+    }
+  }
+
+  for (let i = 0; i < computerBoardBoxesTemp.length; i += 1) {
+    const x = Math.floor(i / 10);
+    const y = i % 10;
+    computerBoardBoxes[x][y].addEventListener('click', () =>
+      computerBoxClickHandler(x, y),
+    );
+    computerBoardBoxes[x][y].addEventListener('mouseenter', () =>
+      computerBoxHoverHandler(x, y),
+    );
+    computerBoardBoxes[x][y].addEventListener('mouseout', () =>
+      computerBoxUnhoverHandler(),
+    );
+  }
+
+  const computerBoxClickHandler = (x, y) => {
+    try {
+      computer.playerBoard.receiveAttack(y, Math.abs(x - 9));
+      computer.playRandomMove();
+      document.getElementsByClassName('body')[0].innerHTML = '';
+      document
+        .getElementsByClassName('body')[0]
+        .appendChild(
+          Body(player.playerBoard.board, computer.playerBoard.board),
+        );
+      updateEventListeners();
+      console.log(player.playerBoard.shipList);
+      console.log(computer.playerBoard.shipList);
+      if (
+        computer.playerBoard.allShipsSunk() ||
+        player.playerBoard.allShipsSunk()
+      ) {
+        document.getElementsByClassName('body')[0].innerHTML = '';
+        document
+          .getElementsByClassName('body')[0]
+          .appendChild(
+            Body(player.playerBoard.board, computer.playerBoard.board),
+          );
+        const winMessage = document.getElementsByClassName('win-message')[0];
+        if (
+          computer.playerBoard.allShipsSunk() &&
+          player.playerBoard.allShipsSunk()
+        ) {
+          winMessage.innerHTML = 'Tie!';
+        } else if (computer.playerBoard.allShipsSunk()) {
+          winMessage.innerHTML = `${playerName} wins!`;
+        } else {
+          winMessage.innerHTML = 'Computer wins!';
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const computerBoxHoverHandler = (x, y) => {
+    computerBoardBoxes[x][y].classList.add('red');
+  };
+
+  const computerBoxUnhoverHandler = () => {
+    for (let i = 0; i < 10; i += 1) {
+      for (let j = 0; j < 10; j += 1) {
+        computerBoardBoxes[i][j].classList.remove('red');
+      }
+    }
+  };
 }

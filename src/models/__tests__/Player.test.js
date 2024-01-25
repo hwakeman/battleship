@@ -1,8 +1,9 @@
 import Player from '../Player';
 import Ship from '../Ship';
 
-let examplePlayer = new Player('Cool Guy');
-beforeAll(() => {
+let examplePlayer;
+
+beforeEach(() => {
   examplePlayer = new Player('Cool Guy');
 });
 
@@ -33,4 +34,15 @@ test('random move', () => {
   examplePlayer.playRandomMove();
   const enemyBoard = examplePlayer.enemyPlayer.playerBoard.board;
   expect(enemyBoard.some((row) => row.includes('X'))).toBeTruthy();
+});
+
+test('random ship place', () => {
+  console.log(examplePlayer.playerBoard.shipList);
+  const exampleShip = new Ship('example-ship', 5);
+  examplePlayer.placeShipRandomly(exampleShip);
+  expect(examplePlayer.playerBoard.shipList.length).toBe(1);
+  const boardArr = examplePlayer.playerBoard.board
+    .flat()
+    .filter((element) => element !== '').length;
+  expect(boardArr).toBe(5);
 });

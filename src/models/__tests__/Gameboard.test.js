@@ -84,7 +84,6 @@ describe('placing ship', () => {
     expect(() => {
       exampleGameboard.place(exampleShip, 7, 7, true);
     }).toThrow('Ship Off Board Error');
-    expect(exampleGameboard.shipList[0]).toEqual(new Ship('example-ship', 5));
   });
 
   test('placing ship off the board (vertical)', () => {
@@ -93,7 +92,6 @@ describe('placing ship', () => {
     expect(() => {
       exampleGameboard.place(exampleShip, 2, 6, false);
     }).toThrow('Ship Off Board Error');
-    expect(exampleGameboard.shipList[0]).toEqual(new Ship('example-ship', 5));
   });
 });
 

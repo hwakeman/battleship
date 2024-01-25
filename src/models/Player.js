@@ -24,6 +24,19 @@ export default class Player {
     }
   }
 
+  placeShipRandomly(ship) {
+    try {
+      this.playerBoard.place(
+        ship,
+        Player.getRandomInt(0, this.playerBoard.board[0].length),
+        Player.getRandomInt(0, this.playerBoard.board.length),
+        Math.random() < 0.5,
+      );
+    } catch (error) {
+      this.placeShipRandomly(ship);
+    }
+  }
+
   static getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }

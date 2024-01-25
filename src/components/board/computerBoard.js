@@ -7,10 +7,10 @@ export default function computerBoard(computerBoardArr) {
     for (let j = 0; j < 10; j += 1) {
       const td = document.createElement('td');
       if (computerBoardArr[i][j] === 'X') {
-        td.innerHTML = 'X';
+        td.innerHTML = '💦';
       }
       if (computerBoardArr[i][j] === 'O') {
-        td.innerHTML = 'O';
+        td.innerHTML = '💥';
       }
       row.appendChild(td);
     }

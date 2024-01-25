@@ -20,7 +20,6 @@ export default class Gameboard {
       throw new Error('Type Error');
     }
 
-    this.shipList.push(ship);
     const realYValue = this.board.length - y - 1;
     if (isHorizontal) {
       if (x + ship.length > this.board[0].length) {
@@ -59,6 +58,7 @@ export default class Gameboard {
         this.board[index][x] = ship.name;
       }
     }
+    this.shipList.push(ship);
   }
 
   receiveAttack(x, y) {
@@ -76,7 +76,14 @@ export default class Gameboard {
     }
 
     const realYValue = this.board.length - y - 1;
-    if (this.board[realYValue][x] !== '') {
+    if (
+      this.board[realYValue][x] === 'X' ||
+      this.board[realYValue][x] === 'O'
+    ) {
+      throw new Error('Attack Repeat Error');
+    } else if (this.board[realYValue][x] === '') {
+      this.board[realYValue][x] = 'X';
+    } else {
       const hitName = this.board[realYValue][x];
       this.shipList.forEach((ship) => {
         if (ship.name === hitName) {
@@ -84,8 +91,6 @@ export default class Gameboard {
           this.board[realYValue][x] = 'O';
         }
       });
-    } else {
-      this.board[realYValue][x] = 'X';
     }
   }
 

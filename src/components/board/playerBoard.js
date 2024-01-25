@@ -7,9 +7,9 @@ export default function playerBoard(playerBoardArr) {
     for (let j = 0; j < 10; j += 1) {
       const td = document.createElement('td');
       if (playerBoardArr[i][j] === 'X') {
-        td.innerHTML = 'X';
+        td.innerHTML = '💦';
       } else if (playerBoardArr[i][j] === 'O') {
-        td.innerHTML = 'O';
+        td.innerHTML = '💥';
       } else if (playerBoardArr[i][j] !== '') {
         td.innerHTML = '🛳';
       }
