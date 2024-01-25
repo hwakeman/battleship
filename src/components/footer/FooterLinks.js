@@ -6,7 +6,7 @@ export default function FooterLinks() {
   githubLink.href = 'https://github.com/hwakeman/battleship';
 
   const githubImage = document.createElement('img');
-  githubImage.src = '/src/images/github.png';
+  githubImage.src = 'src/images/github.png';
 
   githubLink.appendChild(githubImage);
   footerLinks.appendChild(githubLink);
