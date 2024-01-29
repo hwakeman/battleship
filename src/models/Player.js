@@ -17,7 +17,10 @@ export default class Player {
     const randomXValue = Player.getRandomInt(0, enemyBoard.board[0].length);
     const randomYValue = Player.getRandomInt(0, enemyBoard.board.length);
     const realYValue = enemyBoard.board.length - randomYValue - 1;
-    if (enemyBoard.board[realYValue][randomXValue] !== 'X') {
+    if (
+      enemyBoard.board[realYValue][randomXValue] !== 'X' &&
+      enemyBoard.board[realYValue][randomXValue] !== 'O'
+    ) {
       enemyBoard.receiveAttack(randomXValue, randomYValue);
     } else {
       this.playRandomMove();

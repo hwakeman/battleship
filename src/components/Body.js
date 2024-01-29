@@ -2,13 +2,13 @@ import playerBoard from './board/playerBoard';
 import computerBoard from './board/computerBoard';
 import BoardButtons from './board/BoardButtons';
 
-export default function Body(playerBoardArr, computerBoardArr) {
+export default function Body(playerBoardArr, computerBoardArr, playerName) {
   const body = document.createElement('div');
   body.classList.add('body');
 
   const winMessage = document.createElement('div');
   winMessage.classList.add('win-message');
-  winMessage.innerHTML = 'Welcome to Battleship!';
+  winMessage.innerHTML = `Welcome to Battleship ${playerName}!`;
 
   const playerLabel = document.createElement('div');
   playerLabel.classList.add('player-label');

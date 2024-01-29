@@ -10,7 +10,16 @@ import Ship from './models/Ship';
 
 const emptyBoardArr = new Array(10).fill('').map(() => new Array(10).fill(''));
 
-const shipsArr = [
+let playerName = 'Player';
+
+let playerShipsArr = [
+  new Ship('carrier', 5),
+  new Ship('battleship', 4),
+  new Ship('cruiser', 3),
+  new Ship('submarine', 3),
+  new Ship('destroyer', 2),
+];
+let computerShipsArr = [
   new Ship('carrier', 5),
   new Ship('battleship', 4),
   new Ship('cruiser', 3),
@@ -22,22 +31,24 @@ let shipsArrIndex = 0;
 document.getElementById('content').appendChild(Header());
 document
   .getElementById('content')
-  .appendChild(Body(emptyBoardArr, emptyBoardArr));
+  .appendChild(Body(emptyBoardArr, emptyBoardArr, playerName));
 document.getElementById('content').appendChild(Footer());
-document.getElementById('content').appendChild(nameForm());
+document.getElementById('name-form').appendChild(nameForm());
 
 const submitButton = document.getElementsByClassName('submit-button')[0];
 const nameInput = document.getElementsByClassName('name-input')[0];
-let playerName;
 let player;
 let computer;
 
 submitButton.addEventListener('click', () => {
   playerName = nameInput.value;
+  if (playerName === '') playerName = 'Player';
   player = new Player(playerName);
   computer = new Player('computer');
   player.setEnemyPlayer(computer);
   computer.setEnemyPlayer(player);
+  document.getElementsByClassName('win-message')[0].innerHTML =
+    `Welcome to Battleship ${playerName}!`;
 });
 
 let horizontalShips = true;
@@ -71,29 +82,31 @@ function updateEventListeners() {
 
   const playerBoxClickHandler = (x, y) => {
     player.playerBoard.place(
-      shipsArr[shipsArrIndex],
+      playerShipsArr[shipsArrIndex],
       y,
       Math.abs(x - 9),
       horizontalShips,
     );
-    computer.placeShipRandomly(shipsArr[shipsArrIndex]);
+    computer.placeShipRandomly(computerShipsArr[shipsArrIndex]);
     shipsArrIndex += 1;
     document.getElementsByClassName('body')[0].innerHTML = '';
     document
       .getElementsByClassName('body')[0]
-      .appendChild(Body(player.playerBoard.board, computer.playerBoard.board));
+      .appendChild(
+        Body(player.playerBoard.board, computer.playerBoard.board, playerName),
+      );
     updateEventListeners();
   };
 
   const playerBoxHoverHandler = (x, y) => {
     if (horizontalShips) {
-      for (let i = y; i < y + shipsArr[shipsArrIndex].length; i += 1) {
+      for (let i = y; i < y + playerShipsArr[shipsArrIndex].length; i += 1) {
         playerBoardBoxes[x][i].classList.add('green');
       }
     } else {
       for (
         let index = x;
-        index > x - shipsArr[shipsArrIndex].length;
+        index > x - playerShipsArr[shipsArrIndex].length;
         index -= 1
       ) {
         playerBoardBoxes[index][y].classList.add('green');
@@ -120,13 +133,27 @@ function updateEventListeners() {
     document.getElementById('content').appendChild(Header());
     document
       .getElementById('content')
-      .appendChild(Body(emptyBoardArr, emptyBoardArr));
+      .appendChild(Body(emptyBoardArr, emptyBoardArr, playerName));
     document.getElementById('content').appendChild(Footer());
     updateEventListeners();
     shipsArrIndex = 0;
     horizontalShips = true;
     player.playerBoard = new Gameboard(10, 10);
     computer.playerBoard = new Gameboard(10, 10);
+    playerShipsArr = [
+      new Ship('carrier', 5),
+      new Ship('battleship', 4),
+      new Ship('cruiser', 3),
+      new Ship('submarine', 3),
+      new Ship('destroyer', 2),
+    ];
+    computerShipsArr = [
+      new Ship('carrier', 5),
+      new Ship('battleship', 4),
+      new Ship('cruiser', 3),
+      new Ship('submarine', 3),
+      new Ship('destroyer', 2),
+    ];
   });
 
   if (shipsArrIndex === 5) updateComputerBoardEventListeners();
@@ -167,11 +194,13 @@ function updateComputerBoardEventListeners() {
       document
         .getElementsByClassName('body')[0]
         .appendChild(
-          Body(player.playerBoard.board, computer.playerBoard.board),
+          Body(
+            player.playerBoard.board,
+            computer.playerBoard.board,
+            playerName,
+          ),
         );
       updateEventListeners();
-      console.log(player.playerBoard.shipList);
-      console.log(computer.playerBoard.shipList);
       if (
         computer.playerBoard.allShipsSunk() ||
         player.playerBoard.allShipsSunk()
@@ -180,7 +209,11 @@ function updateComputerBoardEventListeners() {
         document
           .getElementsByClassName('body')[0]
           .appendChild(
-            Body(player.playerBoard.board, computer.playerBoard.board),
+            Body(
+              player.playerBoard.board,
+              computer.playerBoard.board,
+              playerName,
+            ),
           );
         const winMessage = document.getElementsByClassName('win-message')[0];
         if (
@@ -193,6 +226,7 @@ function updateComputerBoardEventListeners() {
         } else {
           winMessage.innerHTML = 'Computer wins!';
         }
+        updateEventListeners();
       }
     } catch (error) {
       console.log(error.message);
